@@ -1,7 +1,8 @@
 -module(emqx_auth_custom).
 
 -export([ init/1
-        , check/2
+%        , check/2
+        , check/3
         , description/0
         ]).
 
