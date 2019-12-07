@@ -12,7 +12,7 @@
 %% See the License for the specific language governing permissions and
 %% limitations under the License.
 
--module(emqx_plugin_template).
+-module(emqx_plugin_custom).
 
 -include_lib("emqx/include/emqx.hrl").
 
@@ -40,8 +40,8 @@
 
 %% Called when the plugin application start
 load(Env) ->
-    emqx:hook('client.authenticate', fun ?MODULE:on_client_authenticate/2, [Env]),
-    emqx:hook('client.check_acl', fun ?MODULE:on_client_check_acl/5, [Env]),
+%    emqx:hook('client.authenticate', fun ?MODULE:on_client_authenticate/2, [Env]),
+%    emqx:hook('client.check_acl', fun ?MODULE:on_client_check_acl/5, [Env]),
     emqx:hook('client.connected', fun ?MODULE:on_client_connected/4, [Env]),
     emqx:hook('client.disconnected', fun ?MODULE:on_client_disconnected/3, [Env]),
     emqx:hook('client.subscribe', fun ?MODULE:on_client_subscribe/3, [Env]),
@@ -56,71 +56,71 @@ load(Env) ->
     emqx:hook('message.acked', fun ?MODULE:on_message_acked/3, [Env]),
     emqx:hook('message.dropped', fun ?MODULE:on_message_dropped/3, [Env]).
 
-on_client_authenticate(Credentials = #{client_id := ClientId, password := Password}, _Env) ->
-    io:format("Client(~s) authenticate, Password:~p ~n", [ClientId, Password]),
-    {stop, Credentials#{auth_result => success}}.
-
-on_client_check_acl(#{client_id := ClientId}, PubSub, Topic, DefaultACLResult, _Env) ->
-    io:format("Client(~s) authenticate, PubSub:~p, Topic:~p, DefaultACLResult:~p~n",
-             [ClientId, PubSub, Topic, DefaultACLResult]),
-    {stop, allow}.
+%on_client_authenticate(Credentials = #{client_id := ClientId, password := Password}, _Env) ->
+%    io:format("Custom Client(~s) authenticate, Password:~p ~n", [ClientId, Password]),
+%    {stop, Credentials#{auth_result => success}}.
+%
+%on_client_check_acl(#{client_id := ClientId}, PubSub, Topic, DefaultACLResult, _Env) ->
+%    io:format("Custom Client(~s) authenticate, PubSub:~p, Topic:~p, DefaultACLResult:~p~n",
+%             [ClientId, PubSub, Topic, DefaultACLResult]),
+%    {stop, allow}.
 
 on_client_connected(#{client_id := ClientId}, ConnAck, ConnAttrs, _Env) ->
-    io:format("Client(~s) connected, connack: ~w, conn_attrs:~p~n", [ClientId, ConnAck, ConnAttrs]).
+    io:format("Custom Client(~s) connected, connack: ~w, conn_attrs:~p~n", [ClientId, ConnAck, ConnAttrs]).
 
 on_client_disconnected(#{client_id := ClientId}, ReasonCode, _Env) ->
-    io:format("Client(~s) disconnected, reason_code: ~w~n", [ClientId, ReasonCode]).
+    io:format("Custom Client(~s) disconnected, reason_code: ~w~n", [ClientId, ReasonCode]).
 
 on_client_subscribe(#{client_id := ClientId}, RawTopicFilters, _Env) ->
-    io:format("Client(~s) will subscribe: ~p~n", [ClientId, RawTopicFilters]),
+    io:format("Custom Client(~s) will subscribe: ~p~n", [ClientId, RawTopicFilters]),
     {ok, RawTopicFilters}.
 
 on_client_unsubscribe(#{client_id := ClientId}, RawTopicFilters, _Env) ->
-    io:format("Client(~s) unsubscribe ~p~n", [ClientId, RawTopicFilters]),
+    io:format("Custom Client(~s) unsubscribe ~p~n", [ClientId, RawTopicFilters]),
     {ok, RawTopicFilters}.
 
 on_session_created(#{client_id := ClientId}, SessAttrs, _Env) ->
-    io:format("Session(~s) created: ~p~n", [ClientId, SessAttrs]).
+    io:format("Custom Session(~s) created: ~p~n", [ClientId, SessAttrs]).
 
 on_session_resumed(#{client_id := ClientId}, SessAttrs, _Env) ->
-    io:format("Session(~s) resumed: ~p~n", [ClientId, SessAttrs]).
+    io:format("Custom Session(~s) resumed: ~p~n", [ClientId, SessAttrs]).
 
 on_session_subscribed(#{client_id := ClientId}, Topic, SubOpts, _Env) ->
-    io:format("Session(~s) subscribe ~s with subopts: ~p~n", [ClientId, Topic, SubOpts]).
+    io:format("Custom Session(~s) subscribe ~s with subopts: ~p~n", [ClientId, Topic, SubOpts]).
 
 on_session_unsubscribed(#{client_id := ClientId}, Topic, Opts, _Env) ->
     io:format("Session(~s) unsubscribe ~s with opts: ~p~n", [ClientId, Topic, Opts]).
 
 on_session_terminated(#{client_id := ClientId}, ReasonCode, _Env) ->
-    io:format("Session(~s) terminated: ~p.", [ClientId, ReasonCode]).
+    io:format("Custom Session(~s) terminated: ~p.", [ClientId, ReasonCode]).
 
 %% Transform message and return
 on_message_publish(Message = #message{topic = <<"$SYS/", _/binary>>}, _Env) ->
     {ok, Message};
 
 on_message_publish(Message, _Env) ->
-    io:format("Publish ~s~n", [emqx_message:format(Message)]),
+    io:format("Custom Publish ~s~n", [emqx_message:format(Message)]),
     {ok, Message}.
 
 on_message_deliver(#{client_id := ClientId}, Message, _Env) ->
-    io:format("Deliver message to client(~s): ~s~n", [ClientId, emqx_message:format(Message)]),
+    io:format("Custom Deliver message to client(~s): ~s~n", [ClientId, emqx_message:format(Message)]),
     {ok, Message}.
 
 on_message_acked(#{client_id := ClientId}, Message, _Env) ->
-    io:format("Session(~s) acked message: ~s~n", [ClientId, emqx_message:format(Message)]),
+    io:format("Custom Session(~s) acked message: ~s~n", [ClientId, emqx_message:format(Message)]),
     {ok, Message}.
 
 on_message_dropped(_By, #message{topic = <<"$SYS/", _/binary>>}, _Env) ->
     ok;
 on_message_dropped(#{node := Node}, Message, _Env) ->
-    io:format("Message dropped by node ~s: ~s~n", [Node, emqx_message:format(Message)]);
+    io:format("Custom Message dropped by node ~s: ~s~n", [Node, emqx_message:format(Message)]);
 on_message_dropped(#{client_id := ClientId}, Message, _Env) ->
-    io:format("Message dropped by client ~s: ~s~n", [ClientId, emqx_message:format(Message)]).
+    io:format("Custom Message dropped by client ~s: ~s~n", [ClientId, emqx_message:format(Message)]).
 
 %% Called when the plugin application stop
 unload() ->
-    emqx:unhook('client.authenticate', fun ?MODULE:on_client_authenticate/2),
-    emqx:unhook('client.check_acl', fun ?MODULE:on_client_check_acl/5),
+%    emqx:unhook('client.authenticate', fun ?MODULE:on_client_authenticate/2),
+%    emqx:unhook('client.check_acl', fun ?MODULE:on_client_check_acl/5),
     emqx:unhook('client.connected', fun ?MODULE:on_client_connected/4),
     emqx:unhook('client.disconnected', fun ?MODULE:on_client_disconnected/3),
     emqx:unhook('client.subscribe', fun ?MODULE:on_client_subscribe/3),
