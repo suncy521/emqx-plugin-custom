@@ -22,8 +22,8 @@
 
 %% Hooks functions
 -export([
-%        on_client_authenticate/2
-%        , on_client_check_acl/5 ,
+        on_client_authenticate/2
+        , on_client_check_acl/5 ,
           on_client_connected/4
         , on_client_disconnected/3
         , on_client_subscribe/3
@@ -41,8 +41,8 @@
 
 %% Called when the plugin application start
 load(Env) ->
-%    emqx:hook('client.authenticate', fun ?MODULE:on_client_authenticate/2, [Env]),
-%    emqx:hook('client.check_acl', fun ?MODULE:on_client_check_acl/5, [Env]),
+    emqx:hook('client.authenticate', fun ?MODULE:on_client_authenticate/2, [Env]),
+    emqx:hook('client.check_acl', fun ?MODULE:on_client_check_acl/5, [Env]),
     emqx:hook('client.connected', fun ?MODULE:on_client_connected/4, [Env]),
     emqx:hook('client.disconnected', fun ?MODULE:on_client_disconnected/3, [Env]),
     emqx:hook('client.subscribe', fun ?MODULE:on_client_subscribe/3, [Env]),
@@ -57,14 +57,14 @@ load(Env) ->
     emqx:hook('message.acked', fun ?MODULE:on_message_acked/3, [Env]),
     emqx:hook('message.dropped', fun ?MODULE:on_message_dropped/3, [Env]).
 
-%on_client_authenticate(Credentials = #{client_id := ClientId, password := Password}, _Env) ->
-%    io:format("Custom Client(~s) authenticate, Password:~p ~n", [ClientId, Password]),
-%    {stop, Credentials#{auth_result => success}}.
-%
-%on_client_check_acl(#{client_id := ClientId}, PubSub, Topic, DefaultACLResult, _Env) ->
-%    io:format("Custom Client(~s) authenticate, PubSub:~p, Topic:~p, DefaultACLResult:~p~n",
-%             [ClientId, PubSub, Topic, DefaultACLResult]),
-%    {stop, allow}.
+on_client_authenticate(Credentials = #{client_id := ClientId, password := Password}, _Env) ->
+    io:format("Custom Client(~s) authenticate, Password:~p ~n", [ClientId, Password]),
+    {stop, Credentials#{auth_result => success}}.
+
+on_client_check_acl(#{client_id := ClientId}, PubSub, Topic, DefaultACLResult, _Env) ->
+    io:format("Custom Client(~s) authenticate, PubSub:~p, Topic:~p, DefaultACLResult:~p~n",
+             [ClientId, PubSub, Topic, DefaultACLResult]),
+    {stop, allow}.
 
 on_client_connected(#{client_id := ClientId}, ConnAck, ConnAttrs, _Env) ->
     io:format("Custom Client(~s) connected, connack: ~w, conn_attrs:~p~n", [ClientId, ConnAck, ConnAttrs]).
@@ -120,8 +120,8 @@ on_message_dropped(#{client_id := ClientId}, Message, _Env) ->
 
 %% Called when the plugin application stop
 unload() ->
-%    emqx:unhook('client.authenticate', fun ?MODULE:on_client_authenticate/2),
-%    emqx:unhook('client.check_acl', fun ?MODULE:on_client_check_acl/5),
+    emqx:unhook('client.authenticate', fun ?MODULE:on_client_authenticate/2),
+    emqx:unhook('client.check_acl', fun ?MODULE:on_client_check_acl/5),
     emqx:unhook('client.connected', fun ?MODULE:on_client_connected/4),
     emqx:unhook('client.disconnected', fun ?MODULE:on_client_disconnected/3),
     emqx:unhook('client.subscribe', fun ?MODULE:on_client_subscribe/3),

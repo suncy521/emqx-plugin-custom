@@ -1,6 +1,6 @@
 -module(emqx_auth_custom).
 
--behaviour(emqx_auth_mod).
+%-behaviour(emqx_auth_mod).
 
 -export([ init/1
 %        , check/2
@@ -8,6 +8,7 @@
         , description/0
         ]).
 
+init(Opts) -> {ok, Opts}.
 %init(Opts) -> {ok, Opts}.
 
 %check(_Credentials = #{client_id := ClientId, username := Username, password := Password}, _State) ->
@@ -43,7 +44,6 @@ check_username(Username) ->
       Pass
   end.
 
-init(Opts) -> {ok, Opts}.
 
 check(#{username := undefined}, _Password, _Opts) ->
   {error, username_undefined};
