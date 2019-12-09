@@ -26,11 +26,15 @@
 init(Opts) ->
     {ok, Opts}.
 
-check_acl({Credentials, PubSub, _NoMatchAction, Topic}, _State) ->
-    io:format("ACL Demo: ~p ~p ~p~n", [Credentials, PubSub, Topic]),
+%check_acl({Credentials, PubSub, _NoMatchAction, Topic}, _State) ->
+%    io:format("ACL Demo: ~p ~p ~p~n", [Credentials, PubSub, Topic]),
+%    allow.
+
+check_acl({Credentials, PubSub, Topic}, _Opts) ->
+    io:format("ACL Custom: ~p ~p ~p~n", [Credentials, PubSub, Topic]),
     allow.
 
-reload_acl(_State) ->
+reload_acl(_Opts) ->
     ok.
 
 description() -> "ACL Custom Module".
