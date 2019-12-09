@@ -12,7 +12,7 @@
 %% See the License for the specific language governing permissions and
 %% limitations under the License.
 
--module(emqx_plugin_template).
+-module(emqx_plugin_custom).
 
 -include_lib("emqx/include/emqx.hrl").
 

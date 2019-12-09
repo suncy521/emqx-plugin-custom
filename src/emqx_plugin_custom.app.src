@@ -1,7 +1,7 @@
-{application,emqx_plugin_template,
-             [{description,"EMQ X Plugin Template"},
-              {vsn,"git"},
+{application,emqx_plugin_custom,
+             [{description,"EMQ X Plugin custom"},
+              {vsn,"v3.2.0"},
               {modules,[]},
-              {registered,[emqx_plugin_template_sup]},
+              {registered,[emqx_plugin_custom_sup]},
               {applications,[kernel,stdlib]},
-              {mod,{emqx_plugin_template_app,[]}}]}.
+              {mod,{emqx_plugin_custom_app,[]}}]}.

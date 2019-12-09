@@ -12,7 +12,7 @@
 %% See the License for the specific language governing permissions and
 %% limitations under the License.
 
--module(emqx_plugin_template_app).
+-module(emqx_plugin_custom_app).
 
 -behaviour(application).
 
@@ -23,10 +23,10 @@
         ]).
 
 start(_StartType, _StartArgs) ->
-    {ok, Sup} = emqx_plugin_template_sup:start_link(),
-    emqx_plugin_template:load(application:get_all_env()),
+    {ok, Sup} = emqx_plugin_custom_sup:start_link(),
+    emqx_plugin_custom:load(application:get_all_env()),
     {ok, Sup}.
 
 stop(_State) ->
-    emqx_plugin_template:unload().
+    emqx_plugin_custom:unload().
 

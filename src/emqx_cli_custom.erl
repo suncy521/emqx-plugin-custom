@@ -12,7 +12,7 @@
 %% See the License for the specific language governing permissions and
 %% limitations under the License.
 
--module(emqx_cli_demo).
+-module(emqx_cli_custom).
 
 -export([cmd/1]).
 
@@ -20,5 +20,5 @@ cmd(["arg1", "arg2"]) ->
     emqx_cli:print("ok");
 
 cmd(_) ->
-    emqx_cli:usage([{"cmd arg1 arg2", "cmd demo"}]).
+    emqx_cli:usage([{"cmd arg1 arg2", "cmd custom"}]).
 
