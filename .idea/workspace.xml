@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="aa6b58fc-4922-4927-9e25-49d47abc091f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/emqx_acl_custom.erl" beforeDir="false" afterPath="$PROJECT_DIR$/src/emqx_acl_custom.erl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/emqx_auth_custom.erl" beforeDir="false" afterPath="$PROJECT_DIR$/src/emqx_auth_custom.erl" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,7 +52,7 @@
       <option name="presentableId" value="Default" />
       <updated>1575681664188</updated>
       <workItem from="1575681665497" duration="7087000" />
-      <workItem from="1575855047022" duration="810000" />
+      <workItem from="1575855047022" duration="2575000" />
     </task>
     <servers />
   </component>
