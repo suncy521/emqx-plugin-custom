@@ -14,6 +14,8 @@
 
 -module(emqx_plugin_custom_app).
 
+-include("emqx_plugin_custom.hrl").
+
 -behaviour(application).
 
 -emqx_plugin(?MODULE).
@@ -31,5 +33,7 @@ start(_StartType, _StartArgs) ->
     {ok, Sup}.
 
 stop(_State) ->
+    ok = emqx:hook('client.authenticate', fun emqx_auth_custom:check/2, []),
+    ok = emqx:hook('client.check_acl', fun emqx_acl_custom:check_acl/2, []),
     emqx_plugin_custom:unload().
 

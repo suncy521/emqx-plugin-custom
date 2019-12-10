@@ -14,7 +14,11 @@
 
 -module(emqx_auth_custom).
 
+-include("emqx_plugin_custom.hrl").
+
 -behaviour(emqx_auth_mod).
+
+-include_lib("emqx/include/emqx.hrl").
 
 -export([ init/1
         , check/3

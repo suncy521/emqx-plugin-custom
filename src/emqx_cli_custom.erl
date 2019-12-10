@@ -14,6 +14,8 @@
 
 -module(emqx_cli_custom).
 
+-include("emqx_plugin_custom.hrl").
+
 -export([cmd/1]).
 
 cmd(["arg1", "arg2"]) ->

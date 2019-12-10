@@ -14,6 +14,8 @@
 
 -module(emqx_plugin_custom).
 
+-include("emqx_plugin_custom.hrl").
+
 -include_lib("emqx/include/emqx.hrl").
 
 -export([ load/1

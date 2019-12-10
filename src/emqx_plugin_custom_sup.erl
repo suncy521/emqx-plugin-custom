@@ -14,6 +14,8 @@
 
 -module(emqx_plugin_custom_sup).
 
+-include("emqx_plugin_custom.hrl").
+
 -behaviour(supervisor).
 
 -export([start_link/0]).
