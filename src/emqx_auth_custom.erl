@@ -14,6 +14,8 @@
 
 -module(emqx_auth_custom).
 
+-behaviour(emqx_auth_mod).
+
 -export([ init/1
         , check/3
         , description/0

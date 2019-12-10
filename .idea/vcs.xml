@@ -2,5 +2,8 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/_build/default/lib/cuttlefish" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/_build/default/lib/ekka" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/_build/default/lib/emqx" vcs="Git" />
   </component>
 </project>
