@@ -26,15 +26,15 @@
 
 start(_StartType, _StartArgs) ->
     {ok, Sup} = emqx_plugin_custom_sup:start_link(),
-    emqx_access_control:register_mod(auth, emqx_auth_custom, []),
-%    ok = emqx:hook('client.authenticate', fun emqx_auth_custom:check/2, []),
+%    emqx_access_control:register_mod(auth, emqx_auth_custom, []),
+    ok = emqx:hook('client.authenticate', fun emqx_auth_custom:check/2, []),
 %    ok = emqx:hook('client.check_acl', fun emqx_acl_custom:check_acl/2, []),
     emqx_plugin_custom:load(application:get_all_env()),
     {ok, Sup}.
 
 stop(_State) ->
-    ok = emqx_access_control:unregister_mod(auth, emqx_auth_custom),
-%    ok = emqx:hook('client.authenticate', fun emqx_auth_custom:check/2, []),
+%    ok = emqx_access_control:unregister_mod(auth, emqx_auth_custom),
+    ok = emqx:hook('client.authenticate', fun emqx_auth_custom:check/2, []),
 %    ok = emqx:hook('client.check_acl', fun emqx_acl_custom:check_acl/2, []),
     emqx_plugin_custom:unload().
 
