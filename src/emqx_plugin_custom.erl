@@ -41,7 +41,7 @@
         ]).
 
 %% Called when the plugin application start
--record(message, {topic}).
+%%-record(message, {topic}).
 
 load(Env) ->
     emqx:hook('client.authenticate', fun ?MODULE:on_client_authenticate/2, [Env]),
