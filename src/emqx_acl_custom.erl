@@ -32,7 +32,7 @@ init(Opts) ->
 %    io:format("ACL Demo: ~p ~p ~p~n", [Credentials, PubSub, Topic]),
 %    allow.
 
-check_acl({Credentials, PubSub,_NoMatchAction, Topic}, _State) ->
+check_acl({Credentials, PubSub, Topic}, _State) ->
     io:format("ACL Custom: ~p ~p ~p~n", [Credentials, PubSub, Topic]),
     allow.
 
