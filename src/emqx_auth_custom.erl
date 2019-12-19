@@ -77,9 +77,11 @@ init(Opts) -> {ok, Opts}.
 %%            end
 %%  end.
 
-check(#{username := undefined}, _OPts) ->
+check(#{username := undefined,_Password}, _OPts) ->
   {error, username_undefined};
-check(#{client_id := _ClientId,username := Username, password := Password}, _opts) ->
+check(#{_Credentials, undefined}, _Opts) ->
+  {error, password_undefined};
+check(_Credentials = #{client_id := _ClientId,username := Username, password := Password}, _opts) ->
   case check_username(Username) of
     {error, _} ->
       {error, username_format_error};
@@ -89,6 +91,8 @@ check(#{client_id := _ClientId,username := Username, password := Password}, _opt
         true -> ok;
         false -> {error, password_error}
       end
-  end.
+  end,
+ ok.
+
 
 description() -> "Auth Custom Module".
