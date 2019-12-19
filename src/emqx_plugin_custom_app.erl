@@ -26,7 +26,7 @@
 
 start(_StartType, _StartArgs) ->
     {ok, Sup} = emqx_plugin_custom_sup:start_link(),
-    ok = emqx:hook('client.authenticate', fun emqx_auth_custom:check/3, []),
+    ok = emqx:hook('client.authenticate', fun emqx_auth_custom:check/2, []),
     emqx_plugin_custom:load(application:get_all_env()),
     {ok, Sup}.
 
