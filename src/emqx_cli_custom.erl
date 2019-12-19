@@ -24,3 +24,10 @@ cmd(["arg1", "arg2"]) ->
 cmd(_) ->
     emqx_cli:usage([{"cmd arg1 arg2", "cmd custom"}]).
 
+
+
+
+
+
+
+
